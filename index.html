@@ -60,48 +60,44 @@
   100% { transform: translate(0, 0); }
 }
 
-.planet, .moon {
-  position: fixed;
+.planet {
+  position: absolute;
   border-radius: 50%;
+  background: radial-gradient(circle, #999, #222);
+  box-shadow: 0 0 25px rgba(255,255,255,0.1);
   opacity: 0.2;
   z-index: 0;
-  animation: float 20s ease-in-out infinite;
-  box-shadow: 0 0 30px rgba(255,255,255,0.1);
+  animation: rotatePlanet 100s linear infinite;
 }
 
-.moon {
-  width: 80px;
-  height: 80px;
-  background: #ddd;
-  top: 60px;
-  right: 40px;
+@keyframes rotatePlanet {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .planet.jupiter {
-  width: 100px;
-  height: 100px;
-  background: #d2a679;
-  bottom: 50px;
-  left: 40px;
+  width: 140px; height: 140px;
+  top: 100px; left: 80px;
 }
-
 .planet.uranus {
-  width: 70px;
-  height: 70px;
-  background: #aee9f5;
-  top: 150px;
-  left: 100px;
+  width: 90px; height: 90px;
+  bottom: 120px; right: 120px;
 }
 
-.planet.neptune {
-  width: 60px;
-  height: 60px;
-  background: #667eea;
-  bottom: 120px;
-  right: 120px;
+.moon {
+  position: fixed;
+  top: 40px;
+  right: 60px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #ccc;
+  box-shadow: 0 0 20px #fff;
+  z-index: 0;
+  animation: floatMoon 10s ease-in-out infinite;
 }
 
-@keyframes float {
+@keyframes floatMoon {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
@@ -114,28 +110,44 @@ header {
 }
 
 .logo {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   margin: 0 auto 10px;
   position: relative;
 }
 
 .logo::before {
-  content: 'N';
-  font-size: 64px;
-  color: #FFD700;
-  font-weight: bold;
-  text-shadow: 0 0 15px #FFD700, 0 0 30px #FFD700;
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: glow 2s ease-in-out infinite alternate;
+  width: 80px;
+  height: 80px;
+  border: 4px solid #FFD700;
+  border-radius: 50%;
+  top: 30px;
+  left: 30px;
+  animation: pulse 3s infinite;
 }
 
-@keyframes glow {
-  0% { text-shadow: 0 0 10px #FFD700; }
-  100% { text-shadow: 0 0 30px #FFD700; }
+.logo::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  top: 65px;
+  left: 65px;
+  border-radius: 50%;
+  animation: blink 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes blink {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
 }
 
 header h1 {
@@ -168,6 +180,13 @@ header p {
   color: white;
   box-shadow: 0 0 10px #000;
   outline: none;
+  transition: all 0.3s ease;
+}
+
+#search:focus {
+  background: #003c70;
+  box-shadow: 0 0 20px #FFD700;
+  transform: scale(1.05);
 }
 
 #series-title {
@@ -182,6 +201,7 @@ header p {
 .series-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, auto);
   gap: 30px;
   padding: 30px;
   max-width: 1100px;
@@ -208,9 +228,11 @@ header p {
   color: #FFD700;
 }
 
-.series-card video, .series-card iframe {
+.series-card iframe {
   width: 100%;
+  height: 200px;
   border-radius: 10px;
+  border: none;
 }
 
 footer {
@@ -218,7 +240,7 @@ footer {
   font-size: 14px;
   color: #cccccc;
   padding: 25px 10px;
-  margin-top: auto;
+  margin-top: 50px;
   z-index: 1;
   position: relative;
 }
@@ -230,36 +252,16 @@ footer {
 </div><div id="stars"></div>
 <div class="moon"></div>
 <div class="planet jupiter"></div>
-<div class="planet uranus"></div>
-<div class="planet neptune"></div><header>
+<div class="planet uranus"></div><header>
   <div class="logo"></div>
   <h1>Nexus Software Player</h1>
   <p>„Deine Serienwelt. Jederzeit. Kostenlos.“</p>
 </header><div id="search-container">
   <input type="text" id="search" placeholder="Suche nach Serien...">
 </div><div id="series-title">Beliebte Titel</div><div class="series-grid">
-  <div class="series-card">
-    <h3>John Wick 1 | Ger 2014</h3>
-    <iframe src="https://www.youtube.com/embed/Mbucq0zfLow" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="series-card">
-    <h3>Freelancers | Ger 2012</h3>
-    <iframe src="https://www.youtube.com/embed/aupAjMVXBQg" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="series-card">
-    <h3>Gesetz der Straße | Ger 2010</h3>
-    <iframe src="https://www.youtube.com/embed/yh6nQZ9jAUs" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <!-- Weitere Platzhalter-Videos -->
-  <div class="series-card"><h3>Episode 4</h3><video controls><source src="episode4.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 5</h3><video controls><source src="episode5.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 6</h3><video controls><source src="episode6.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 7</h3><video controls><source src="episode7.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 8</h3><video controls><source src="episode8.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 9</h3><video controls><source src="episode9.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 10</h3><video controls><source src="episode10.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 11</h3><video controls><source src="episode11.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 12</h3><video controls><source src="episode12.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>John Wick 1 | Ger 2014</h3><iframe src="https://www.youtube.com/embed/Mbucq0zfLow" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Freelancers | Ger 2012</h3><iframe src="https://www.youtube.com/embed/aupAjMVXBQg" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Gesetz der Straße | Ger 2010</h3><iframe src="https://www.youtube.com/embed/yh6nQZ9jAUs" allowfullscreen></iframe></div>
 </div><footer>
   Powered by Nexus Software Corp. | 2025 DE-VAE ©
 </footer><script>
@@ -276,5 +278,15 @@ footer {
     star.style.animationDuration = (20 + Math.random() * 40) + 's';
     starsContainer.appendChild(star);
   }
+
+  const searchInput = document.getElementById('search');
+  const seriesCards = document.querySelectorAll('.series-card');
+  searchInput.addEventListener('input', () => {
+    const value = searchInput.value.toLowerCase();
+    seriesCards.forEach(card => {
+      const title = card.querySelector('h3').innerText.toLowerCase();
+      card.style.display = title.includes(value) ? 'block' : 'none';
+    });
+  });
 </script></body>
 </html>
