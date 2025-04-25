@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="de">
+<!DOCTYPE html><html lang="de">
 <head>
   <meta charset="UTF-8">
   <title>Nexus Software Player</title>
@@ -9,241 +8,240 @@
       padding: 0;
       height: 100%;
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(ellipse at bottom, #00121d, #000814);
+      background: radial-gradient(ellipse at bottom, #00132b, #000814);
       overflow-x: hidden;
       color: #FFD700;
-    }
+    }#stars, .planet, .moon {
+  position: fixed;
+  z-index: 0;
+}
 
-    /* Hintergrund Planeten */
-    .planet, .moon, .glow {
-      position: fixed;
-      border-radius: 50%;
-      opacity: 0.1;
-      filter: blur(2px);
-      z-index: 0;
-    }
+#stars {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 
-    .planet.jupiter {
-      width: 150px;
-      height: 150px;
-      background: radial-gradient(circle, #ffaa66, #cc6600);
-      top: 20%;
-      left: 10%;
-      animation: slowFloat 60s ease-in-out infinite;
-    }
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatStars linear infinite;
+}
 
-    .planet.uranus {
-      width: 100px;
-      height: 100px;
-      background: radial-gradient(circle, #88ccff, #005577);
-      bottom: 20%;
-      right: 15%;
-      animation: slowFloatReverse 80s ease-in-out infinite;
-    }
+@keyframes floatStars {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(10px, -10px); }
+  100% { transform: translate(0, 0); }
+}
 
-    .moon {
-      width: 60px;
-      height: 60px;
-      background: radial-gradient(circle, #ccc, #666);
-      top: 50px;
-      right: 60px;
-      box-shadow: 0 0 20px #fff2;
-      animation: slowFloat 50s ease-in-out infinite;
-    }
+.planet {
+  border-radius: 50%;
+  filter: blur(1px);
+  opacity: 0.15;
+  animation: floatPlanet 60s ease-in-out infinite alternate;
+}
 
-    @keyframes slowFloat {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(10px); }
-      100% { transform: translateY(0px); }
-    }
+.planet.jupiter {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(to right, #d1a679, #f5deb3);
+  top: 100px;
+  left: 50px;
+}
 
-    @keyframes slowFloatReverse {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
-    }
+.planet.uranus {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(to right, #98d8f8, #b0e0e6);
+  top: 500px;
+  right: 70px;
+}
 
-    /* Logo */
-    header {
-      text-align: center;
-      padding: 40px 10px 10px;
-      z-index: 1;
-      position: relative;
-    }
+.planet.neptune {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(to right, #4169e1, #1e90ff);
+  bottom: 150px;
+  left: 100px;
+}
 
-    .logo {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 10px;
-      position: relative;
-      animation: pulseGlow 3s infinite;
-    }
+.moon {
+  top: 40px;
+  right: 60px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #ccc;
+  box-shadow: 0 0 20px #fff;
+}
 
-    .logo::before {
-      content: '';
-      position: absolute;
-      width: 80px;
-      height: 80px;
-      border: 4px solid #FFD700;
-      border-radius: 50%;
-      top: 20px;
-      left: 20px;
-      box-shadow: 0 0 30px #ffd70088;
-    }
+@keyframes floatPlanet {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-20px); }
+}
 
-    .logo::after {
-      content: '';
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      background: white;
-      top: 54px;
-      left: 54px;
-      border-radius: 50%;
-      animation: blink 1.5s infinite alternate;
-    }
+header {
+  text-align: center;
+  padding: 40px 10px 10px;
+  z-index: 1;
+  position: relative;
+}
 
-    @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
+.logo {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 10px;
+  position: relative;
+}
 
-    @keyframes blink {
-      0% { opacity: 0.4; }
-      100% { opacity: 1; }
-    }
+.logo::before {
+  content: 'N';
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  font-size: 90px;
+  color: #FFD700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700;
+  animation: glow 2s infinite alternate;
+}
 
-    header h1 {
-      font-size: 36px;
-      color: #FFD700;
-      text-shadow: 0 0 15px #FFD700;
-      margin: 10px 0;
-    }
+@keyframes glow {
+  0% { text-shadow: 0 0 10px #FFD700; }
+  100% { text-shadow: 0 0 30px #FFD700, 0 0 60px #FFD700; }
+}
 
-    header p {
-      font-style: italic;
-      font-size: 16px;
-      color: #cccccc;
-    }
+header h1 {
+  font-size: 36px;
+  color: #FFD700;
+  text-shadow: 0 0 15px #FFD700;
+  margin: 10px 0;
+}
 
-    /* Suche */
-    #search-container {
-      text-align: center;
-      margin: 30px 0 10px;
-      position: relative;
-      z-index: 1;
-    }
+header p {
+  font-style: italic;
+  font-size: 16px;
+  color: #cccccc;
+}
 
-    #search {
-      padding: 12px 20px;
-      width: 60%;
-      border: none;
-      border-radius: 25px;
-      font-size: 16px;
-      background: #00264d;
-      color: white;
-      box-shadow: 0 0 10px #000;
-      outline: none;
-    }
+#search-container {
+  text-align: center;
+  margin: 30px 0 10px;
+  position: relative;
+  z-index: 1;
+}
 
-    /* Beliebte Titel */
-    #series-title {
-      text-align: center;
-      font-size: 26px;
-      color: #FFD700;
-      margin-top: 30px;
-      z-index: 1;
-      position: relative;
-    }
+#search {
+  padding: 12px 20px;
+  width: 60%;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  background: #00264d;
+  color: white;
+  box-shadow: 0 0 10px #000;
+  outline: none;
+}
 
-    .series-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-      padding: 30px;
-      max-width: 1200px;
-      margin: auto;
-      z-index: 1;
-      position: relative;
-    }
+#series-title {
+  text-align: center;
+  font-size: 26px;
+  color: #FFD700;
+  margin-top: 30px;
+  z-index: 1;
+  position: relative;
+}
 
-    .series-card {
-      background: #001b33;
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-      transition: 0.3s;
-    }
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, auto);
+  gap: 30px;
+  padding: 30px;
+  max-width: 1100px;
+  margin: auto;
+  z-index: 1;
+  position: relative;
+}
 
-    .series-card:hover {
-      box-shadow: 0 0 20px #FFD700;
-      transform: translateY(-5px);
-    }
+.series-card {
+  background: #001b33;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  transition: 0.3s;
+}
 
-    .series-card h3 {
-      color: #FFD700;
-    }
+.series-card:hover {
+  box-shadow: 0 0 20px #FFD700;
+  transform: translateY(-5px);
+}
 
-    .series-card video {
-      width: 100%;
-      border-radius: 10px;
-    }
+.series-card h3 {
+  color: #FFD700;
+}
 
-    footer {
-      text-align: center;
-      font-size: 14px;
-      color: #cccccc;
-      padding: 25px 10px;
-      margin-top: auto;
-      z-index: 1;
-      position: relative;
-    }
+.series-card video {
+  width: 100%;
+  border-radius: 10px;
+}
+
+footer {
+  text-align: center;
+  font-size: 14px;
+  color: #cccccc;
+  padding: 25px 10px;
+  position: relative;
+  z-index: 1;
+}
 
   </style>
 </head>
 <body>
-
-<!-- Hintergrund-Planeten -->
+<div id="stars"></div>
+<div class="moon"></div>
 <div class="planet jupiter"></div>
 <div class="planet uranus"></div>
-<div class="moon"></div>
-
-<header>
+<div class="planet neptune"></div><header>
   <div class="logo"></div>
   <h1>Nexus Software Player</h1>
   <p>„Deine Serienwelt. Jederzeit. Kostenlos.“</p>
-</header>
-
-<div id="search-container">
+</header><div id="search-container">
   <input type="text" id="search" placeholder="Suche nach Serien...">
-</div>
-
-<div id="series-title">Beliebte Titel</div>
-
-<div class="series-grid">
-  <!-- Beispiel-Videos -->
-  <!-- Du kannst alle Videos wie unten hinzufügen -->
+</div><div id="series-title">Beliebte Titel</div><div class="series-grid">
+  <!-- Beispielkarten -->
   <div class="series-card"><h3>Episode 1</h3><video controls><source src="episode1.mp4" type="video/mp4"></video></div>
-  <!-- Wiederhole bis Episode 12 -->
-</div>
-
-<footer>
+  <div class="series-card"><h3>Episode 2</h3><video controls><source src="episode2.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 3</h3><video controls><source src="episode3.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 4</h3><video controls><source src="episode4.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 5</h3><video controls><source src="episode5.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 6</h3><video controls><source src="episode6.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 7</h3><video controls><source src="episode7.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 8</h3><video controls><source src="episode8.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 9</h3><video controls><source src="episode9.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 10</h3><video controls><source src="episode10.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 11</h3><video controls><source src="episode11.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 12</h3><video controls><source src="episode12.mp4" type="video/mp4"></video></div>
+</div><footer>
   Powered by Nexus Software Corp. | 2025 DE-VAE ©
-</footer>
-
-<script>
-  // Suche
-  const searchInput = document.getElementById('search');
-  const seriesCards = document.querySelectorAll('.series-card');
-  searchInput.addEventListener('input', () => {
-    const value = searchInput.value.toLowerCase();
-    seriesCards.forEach(card => {
-      const title = card.querySelector('h3').innerText.toLowerCase();
-      card.style.display = title.includes(value) ? 'block' : 'none';
-    });
-  });
-</script>
-
-</body>
+</footer><script>
+  // Sterne generieren
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.top = Math.random() * 100 + '%';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.animationDuration = (20 + Math.random() * 40) + 's';
+    starsContainer.appendChild(star);
+  }
+</script></body>
 </html>
