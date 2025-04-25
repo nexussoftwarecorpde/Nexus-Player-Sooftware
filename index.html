@@ -61,46 +61,22 @@
 }
 
 .planet {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, #999, #222);
-  box-shadow: 0 0 25px rgba(255,255,255,0.1);
-  opacity: 0.2;
-  z-index: 0;
-  animation: rotatePlanet 100s linear infinite;
-}
-
-@keyframes rotatePlanet {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.planet.jupiter {
-  width: 140px; height: 140px;
-  top: 100px; left: 80px;
-}
-.planet.uranus {
-  width: 90px; height: 90px;
-  bottom: 120px; right: 120px;
-}
-
-.moon {
   position: fixed;
-  top: 40px;
-  right: 60px;
-  width: 50px;
-  height: 50px;
   border-radius: 50%;
-  background: #ccc;
-  box-shadow: 0 0 20px #fff;
+  opacity: 0.15;
   z-index: 0;
-  animation: floatMoon 10s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  animation: drift 60s linear infinite;
 }
 
-@keyframes floatMoon {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+@keyframes drift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20px); }
 }
+
+.planet.jupiter { width: 100px; height: 100px; background: #d2a679; bottom: 10%; left: 10%; }
+.planet.uranus { width: 80px; height: 80px; background: #66ffff; top: 15%; right: 15%; }
+.planet.moon { width: 60px; height: 60px; background: #ccc; top: 40px; right: 60px; }
 
 header {
   text-align: center;
@@ -110,44 +86,16 @@ header {
 }
 
 .logo {
-  width: 140px;
-  height: 140px;
-  margin: 0 auto 10px;
-  position: relative;
+  font-size: 100px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFA500;
+  animation: glow 2s ease-in-out infinite alternate;
 }
 
-.logo::before {
-  content: '';
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border: 4px solid #FFD700;
-  border-radius: 50%;
-  top: 30px;
-  left: 30px;
-  animation: pulse 3s infinite;
-}
-
-.logo::after {
-  content: '';
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: #fff;
-  top: 65px;
-  left: 65px;
-  border-radius: 50%;
-  animation: blink 1.5s infinite alternate;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.2); opacity: 1; }
-}
-
-@keyframes blink {
-  0% { opacity: 0.3; }
-  100% { opacity: 1; }
+@keyframes glow {
+  from { text-shadow: 0 0 5px #FFD700; }
+  to { text-shadow: 0 0 20px #FFA500, 0 0 30px #FFA500; }
 }
 
 header h1 {
@@ -180,13 +128,11 @@ header p {
   color: white;
   box-shadow: 0 0 10px #000;
   outline: none;
-  transition: all 0.3s ease;
+  transition: box-shadow 0.3s;
 }
 
 #search:focus {
-  background: #003c70;
-  box-shadow: 0 0 20px #FFD700;
-  transform: scale(1.05);
+  box-shadow: 0 0 15px #FFD700;
 }
 
 #series-title {
@@ -232,7 +178,6 @@ header p {
   width: 100%;
   height: 200px;
   border-radius: 10px;
-  border: none;
 }
 
 footer {
@@ -240,35 +185,51 @@ footer {
   font-size: 14px;
   color: #cccccc;
   padding: 25px 10px;
-  margin-top: 50px;
+  margin-top: auto;
   z-index: 1;
   position: relative;
 }
 
   </style>
 </head>
-<body><div id="loader">
+<body>
+<div id="loader">
   <div class="loader-ring"></div>
-</div><div id="stars"></div>
-<div class="moon"></div>
+</div>
+<div id="stars"></div>
+<div class="planet moon"></div>
 <div class="planet jupiter"></div>
-<div class="planet uranus"></div><header>
-  <div class="logo"></div>
+<div class="planet uranus"></div>
+<header>
+  <div class="logo">N</div>
   <h1>Nexus Software Player</h1>
   <p>„Deine Serienwelt. Jederzeit. Kostenlos.“</p>
-</header><div id="search-container">
-  <input type="text" id="search" placeholder="Suche nach Serien...">
-</div><div id="series-title">Beliebte Titel</div><div class="series-grid">
-  <div class="series-card"><h3>John Wick 1 | Ger 2014</h3><iframe src="https://www.youtube.com/embed/Mbucq0zfLow" allowfullscreen></iframe></div>
-  <div class="series-card"><h3>Freelancers | Ger 2012</h3><iframe src="https://www.youtube.com/embed/aupAjMVXBQg" allowfullscreen></iframe></div>
-  <div class="series-card"><h3>Gesetz der Straße | Ger 2010</h3><iframe src="https://www.youtube.com/embed/yh6nQZ9jAUs" allowfullscreen></iframe></div>
-</div><footer>
+</header>
+<div id="search-container">
+  <input type="text" id="search" placeholder="Suche nach Titeln...">
+</div>
+<div id="series-title">Beliebte Titel</div>
+<div class="series-grid">
+  <div class="series-card"><h3>John Wick 1 | Ger 2014</h3><iframe src="https://www.youtube.com/embed/Mbucq0zfLow" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Freelancers | Ger 2012</h3><iframe src="https://www.youtube.com/embed/aupAjMVXBQg" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Gesetz der Straße | Ger 2010</h3><iframe src="https://www.youtube.com/embed/yh6nQZ9jAUs" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Episode 4</h3><iframe src="" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Episode 5</h3><iframe src="" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Episode 6</h3><iframe src="" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Episode 7</h3><iframe src="" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Episode 8</h3><iframe src="" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Episode 9</h3><iframe src="" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Episode 10</h3><iframe src="" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Episode 11</h3><iframe src="" frameborder="0" allowfullscreen></iframe></div>
+  <div class="series-card"><h3>Episode 12</h3><iframe src="" frameborder="0" allowfullscreen></iframe></div>
+</div>
+<footer>
   Powered by Nexus Software Corp. | 2025 DE-VAE ©
-</footer><script>
+</footer>
+<script>
   window.addEventListener("load", function() {
     document.getElementById("loader").style.display = "none";
   });
-
   const starsContainer = document.getElementById('stars');
   for (let i = 0; i < 100; i++) {
     const star = document.createElement('div');
@@ -278,7 +239,6 @@ footer {
     star.style.animationDuration = (20 + Math.random() * 40) + 's';
     starsContainer.appendChild(star);
   }
-
   const searchInput = document.getElementById('search');
   const seriesCards = document.querySelectorAll('.series-card');
   searchInput.addEventListener('input', () => {
@@ -288,5 +248,6 @@ footer {
       card.style.display = title.includes(value) ? 'block' : 'none';
     });
   });
-</script></body>
+</script>
+</body>
 </html>
