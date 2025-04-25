@@ -9,142 +9,61 @@
       padding: 0;
       height: 100%;
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(ellipse at bottom, #00132b, #000814);
+      background: radial-gradient(ellipse at bottom, #00121d, #000814);
       overflow-x: hidden;
       color: #FFD700;
     }
 
-    #loader {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #000814;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .loader-ring {
-      border: 6px solid #002850;
-      border-top: 6px solid #FFD700;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1.2s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Sterne */
-    #stars {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.6;
-      animation: floatStars linear infinite;
-    }
-
-    @keyframes floatStars {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(10px, -10px); }
-    }
-
-    /* Planeten */
-    .planet, .moon {
+    /* Hintergrund Planeten */
+    .planet, .moon, .glow {
       position: fixed;
       border-radius: 50%;
       opacity: 0.1;
-      box-shadow: 0 0 30px #fff;
+      filter: blur(2px);
       z-index: 0;
     }
 
-    .moon {
-      top: 10%;
-      right: 10%;
-      width: 50px;
-      height: 50px;
-      background: #ccc;
-      animation: orbit1 40s linear infinite;
-    }
-
-    .saturn {
-      bottom: 20px;
-      left: 40px;
-      width: 60px;
-      height: 60px;
-      background: #e0a95c;
-      box-shadow: 0 0 20px #e0a95c;
-    }
-
-    .saturn::before {
-      content: '';
-      position: absolute;
-      top: 26px;
-      left: -10px;
-      width: 80px;
-      height: 8px;
-      background: rgba(255, 215, 0, 0.2);
-      border-radius: 50%;
-      transform: rotate(-20deg);
-    }
-
     .planet.jupiter {
-      top: 15%;
-      left: 5%;
-      width: 100px;
-      height: 100px;
-      background: #ffcc99;
-      animation: orbit2 60s linear infinite;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, #ffaa66, #cc6600);
+      top: 20%;
+      left: 10%;
+      animation: slowFloat 60s ease-in-out infinite;
     }
 
     .planet.uranus {
-      bottom: 10%;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, #88ccff, #005577);
+      bottom: 20%;
       right: 15%;
-      width: 70px;
-      height: 70px;
-      background: #99ddff;
-      animation: orbit3 80s linear infinite;
+      animation: slowFloatReverse 80s ease-in-out infinite;
     }
 
-    .planet.mars {
-      top: 35%;
-      right: 5%;
-      width: 40px;
-      height: 40px;
-      background: #ff4422;
-      animation: orbit4 50s linear infinite;
+    .moon {
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle, #ccc, #666);
+      top: 50px;
+      right: 60px;
+      box-shadow: 0 0 20px #fff2;
+      animation: slowFloat 50s ease-in-out infinite;
     }
 
-    .planet.neptun {
-      bottom: 15%;
-      left: 10%;
-      width: 80px;
-      height: 80px;
-      background: #4444ff;
-      animation: orbit5 70s linear infinite;
+    @keyframes slowFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(10px); }
+      100% { transform: translateY(0px); }
     }
 
-    @keyframes orbit1 { 0% { transform: translateY(0); } 50% { transform: translateY(10px); } 100% { transform: translateY(0); } }
-    @keyframes orbit2 { 0% { transform: rotate(0deg) translateX(10px); } 100% { transform: rotate(360deg) translateX(10px); } }
-    @keyframes orbit3 { 0% { transform: rotate(0deg) translateX(-10px); } 100% { transform: rotate(360deg) translateX(-10px); } }
-    @keyframes orbit4 { 0% { transform: translateY(0); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0); } }
-    @keyframes orbit5 { 0% { transform: rotate(0deg) translateY(6px); } 100% { transform: rotate(360deg) translateY(6px); } }
+    @keyframes slowFloatReverse {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
 
-    /* Header & Logo */
+    /* Logo */
     header {
       text-align: center;
       padding: 40px 10px 10px;
@@ -157,46 +76,41 @@
       height: 120px;
       margin: 0 auto 10px;
       position: relative;
-      animation: glow 3s infinite ease-in-out;
+      animation: pulseGlow 3s infinite;
     }
 
     .logo::before {
       content: '';
       position: absolute;
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
       border: 4px solid #FFD700;
       border-radius: 50%;
-      top: 30px;
-      left: 30px;
-      animation: pulse 3s infinite;
+      top: 20px;
+      left: 20px;
+      box-shadow: 0 0 30px #ffd70088;
     }
 
     .logo::after {
       content: '';
       position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #fff;
-      top: 56px;
-      left: 56px;
+      width: 12px;
+      height: 12px;
+      background: white;
+      top: 54px;
+      left: 54px;
       border-radius: 50%;
       animation: blink 1.5s infinite alternate;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.2); opacity: 1; }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
     }
 
     @keyframes blink {
-      0% { opacity: 0.3; }
+      0% { opacity: 0.4; }
       100% { opacity: 1; }
-    }
-
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 0 10px #FFD700; }
-      50% { box-shadow: 0 0 30px #FFD700; }
     }
 
     header h1 {
@@ -212,6 +126,7 @@
       color: #cccccc;
     }
 
+    /* Suche */
     #search-container {
       text-align: center;
       margin: 30px 0 10px;
@@ -231,6 +146,7 @@
       outline: none;
     }
 
+    /* Beliebte Titel */
     #series-title {
       text-align: center;
       font-size: 26px;
@@ -242,11 +158,10 @@
 
     .series-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(4, auto);
+      grid-template-columns: repeat(4, 1fr);
       gap: 30px;
       padding: 30px;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: auto;
       z-index: 1;
       position: relative;
@@ -289,17 +204,10 @@
 </head>
 <body>
 
-<div id="loader">
-  <div class="loader-ring"></div>
-</div>
-
-<div id="stars"></div>
-<div class="moon"></div>
-<div class="saturn"></div>
+<!-- Hintergrund-Planeten -->
 <div class="planet jupiter"></div>
 <div class="planet uranus"></div>
-<div class="planet mars"></div>
-<div class="planet neptun"></div>
+<div class="moon"></div>
 
 <header>
   <div class="logo"></div>
@@ -314,30 +222,18 @@
 <div id="series-title">Beliebte Titel</div>
 
 <div class="series-grid">
-  <!-- 12 Video Cards -->
+  <!-- Beispiel-Videos -->
+  <!-- Du kannst alle Videos wie unten hinzufügen -->
   <div class="series-card"><h3>Episode 1</h3><video controls><source src="episode1.mp4" type="video/mp4"></video></div>
-  <!-- ... füge hier die restlichen Episoden bis 12 hinzu ... -->
+  <!-- Wiederhole bis Episode 12 -->
 </div>
 
 <footer>
-  powered by Nexus Software Corp.
+  Powered by Nexus Software Corp. | 2025 DE-VAE ©
 </footer>
 
 <script>
-  window.addEventListener("load", function() {
-    document.getElementById("loader").style.display = "none";
-  });
-
-  const starsContainer = document.getElementById('stars');
-  for (let i = 0; i < 100; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    star.style.top = Math.random() * 100 + '%';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.animationDuration = (20 + Math.random() * 40) + 's';
-    starsContainer.appendChild(star);
-  }
-
+  // Suche
   const searchInput = document.getElementById('search');
   const seriesCards = document.querySelectorAll('.series-card');
   searchInput.addEventListener('input', () => {
