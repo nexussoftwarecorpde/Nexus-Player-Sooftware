@@ -1,241 +1,312 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Nexus Software Player</title>
-    <style>
-        /* Grundlayout */
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            color: #FFD700;
-            background: radial-gradient(ellipse at bottom, #00132b, #000814);
-            overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <title>Nexus Software Player</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(ellipse at bottom, #00132b, #000814);
+      overflow-x: hidden;
+      color: #FFD700;
+    }
 
-        /* Sterne Animation */
-        #stars {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 0;
-            overflow: hidden;
-        }
+    /* Ladebildschirm */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000814;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
 
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: floatStars linear infinite;
-            opacity: 0.6;
-        }
+    .loader-ring {
+      border: 6px solid #002850;
+      border-top: 6px solid #FFD700;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1.2s linear infinite;
+    }
 
-        @keyframes floatStars {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(20px, -20px); }
-            100% { transform: translate(0, 0); }
-        }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
-        /* Header mit Logo */
-        header {
-            text-align: center;
-            padding: 40px 10px 10px;
-            position: relative;
-            z-index: 1;
-        }
+    /* Sterne */
+    #stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
 
-        .logo {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 10px;
-            position: relative;
-        }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: floatStars linear infinite;
+    }
 
-        .logo::before, .logo::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            background: #FFD700;
-            opacity: 0.7;
-            animation: pulse 3s infinite ease-in-out;
-        }
+    @keyframes floatStars {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(10px, -10px); }
+      100% { transform: translate(0, 0); }
+    }
 
-        .logo::before {
-            width: 40px;
-            height: 40px;
-            top: 30px;
-            left: 30px;
-        }
+    /* Mond */
+    .moon {
+      position: fixed;
+      top: 40px;
+      right: 60px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #ccc;
+      box-shadow: 0 0 20px #fff;
+      z-index: 0;
+    }
 
-        .logo::after {
-            width: 20px;
-            height: 20px;
-            top: 40px;
-            left: 40px;
-            background: #ffffff;
-        }
+    /* Saturn */
+    .saturn {
+      position: fixed;
+      bottom: 20px;
+      left: 40px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #e0a95c;
+      box-shadow: 0 0 20px #e0a95c;
+      z-index: 0;
+    }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
-        }
+    .saturn::before {
+      content: '';
+      position: absolute;
+      top: 26px;
+      left: -10px;
+      width: 80px;
+      height: 8px;
+      background: rgba(255, 215, 0, 0.4);
+      border-radius: 50%;
+      transform: rotate(-20deg);
+    }
 
-        header h1 {
-            font-size: 36px;
-            color: #FFD700;
-            text-shadow: 0 0 15px #FFD700;
-            margin-bottom: 10px;
-        }
+    /* Header & Logo */
+    header {
+      text-align: center;
+      padding: 40px 10px 10px;
+      z-index: 1;
+      position: relative;
+    }
 
-        header p {
-            font-style: italic;
-            font-size: 16px;
-            color: #cccccc;
-            margin-bottom: 30px;
-        }
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 10px;
+      position: relative;
+    }
 
-        /* Suche */
-        #search-container {
-            text-align: center;
-            margin: 20px;
-            position: relative;
-            z-index: 1;
-        }
+    .logo::before {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border: 4px solid #FFD700;
+      border-radius: 50%;
+      top: 30px;
+      left: 30px;
+      animation: pulse 3s infinite;
+    }
 
-        #search {
-            padding: 12px 20px;
-            width: 60%;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            background: #00264d;
-            color: white;
-            box-shadow: 0 0 10px #000;
-            outline: none;
-        }
+    .logo::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      top: 56px;
+      left: 56px;
+      border-radius: 50%;
+      animation: blink 1.5s infinite alternate;
+    }
 
-        /* Serien-Layout */
-        #series-title {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 26px;
-            color: #FFD700;
-            position: relative;
-            z-index: 1;
-        }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
 
-        .series-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
-        }
+    @keyframes blink {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
 
-        .series-card {
-            background: #001b33;
-            border-radius: 12px;
-            margin: 15px;
-            padding: 15px;
-            width: 260px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            transition: 0.3s;
-        }
+    header h1 {
+      font-size: 36px;
+      color: #FFD700;
+      text-shadow: 0 0 15px #FFD700;
+      margin: 10px 0;
+    }
 
-        .series-card:hover {
-            box-shadow: 0 0 20px #FFD700;
-            transform: translateY(-5px);
-        }
+    header p {
+      font-style: italic;
+      font-size: 16px;
+      color: #cccccc;
+    }
 
-        .series-card h3 {
-            margin-top: 0;
-            color: #FFD700;
-        }
+    /* Suche */
+    #search-container {
+      text-align: center;
+      margin: 30px 0 10px;
+      position: relative;
+      z-index: 1;
+    }
 
-        .series-card video {
-            width: 100%;
-            border-radius: 10px;
-        }
+    #search {
+      padding: 12px 20px;
+      width: 60%;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      background: #00264d;
+      color: white;
+      box-shadow: 0 0 10px #000;
+      outline: none;
+    }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px 10px;
-            font-size: 14px;
-            color: #cccccc;
-            margin-top: 50px;
-            position: relative;
-            z-index: 1;
-        }
-    </style>
+    /* Beliebte Serien */
+    #series-title {
+      text-align: center;
+      font-size: 26px;
+      color: #FFD700;
+      margin-top: 30px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .series-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      padding: 30px;
+      max-width: 1100px;
+      margin: auto;
+      z-index: 1;
+      position: relative;
+    }
+
+    .series-card {
+      background: #001b33;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      transition: 0.3s;
+    }
+
+    .series-card:hover {
+      box-shadow: 0 0 20px #FFD700;
+      transform: translateY(-5px);
+    }
+
+    .series-card h3 {
+      color: #FFD700;
+    }
+
+    .series-card video {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #cccccc;
+      padding: 25px 10px;
+      margin-top: auto;
+      z-index: 1;
+      position: relative;
+    }
+
+  </style>
 </head>
 <body>
 
+<div id="loader">
+  <div class="loader-ring"></div>
+</div>
+
 <div id="stars"></div>
+<div class="moon"></div>
+<div class="saturn"></div>
 
 <header>
-    <div class="logo"></div>
-    <h1>Nexus Software Player</h1>
-    <p>„Deine Serienwelt. Jederzeit. Kostenlos.“</p>
+  <div class="logo"></div>
+  <h1>Nexus Software Player</h1>
+  <p>„Deine Serienwelt. Jederzeit. Kostenlos.“</p>
 </header>
 
 <div id="search-container">
-    <input type="text" id="search" placeholder="Suche nach Serien...">
+  <input type="text" id="search" placeholder="Suche nach Serien...">
 </div>
 
 <div id="series-title">Beliebte Serien</div>
 
 <div class="series-grid">
-    <div class="series-card">
-        <h3>Episode 1: Der Anfang</h3>
-        <video controls>
-            <source src="episode1.mp4" type="video/mp4">
-            Dein Browser unterstützt kein Video.
-        </video>
-    </div>
-    <!-- Weitere Episoden wie gehabt... -->
+  <div class="series-card"><h3>Episode 1</h3><video controls><source src="episode1.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 2</h3><video controls><source src="episode2.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 3</h3><video controls><source src="episode3.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 4</h3><video controls><source src="episode4.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 5</h3><video controls><source src="episode5.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 6</h3><video controls><source src="episode6.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 7</h3><video controls><source src="episode7.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 8</h3><video controls><source src="episode8.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 9</h3><video controls><source src="episode9.mp4" type="video/mp4"></video></div>
 </div>
 
 <footer>
-    powered by Nexus Software Corp.
+  powered by Nexus Software Corp.
 </footer>
 
 <script>
-    // Sterne generieren
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 120; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        star.style.top = Math.random() * 100 + '%';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.animationDuration = (30 + Math.random() * 30) + 's';
-        star.style.opacity = Math.random();
-        starsContainer.appendChild(star);
-    }
+  // Ladeanimation
+  window.addEventListener("load", function() {
+    document.getElementById("loader").style.display = "none";
+  });
 
-    // Suchfunktion
-    const searchInput = document.getElementById('search');
-    const seriesCards = document.querySelectorAll('.series-card');
+  // Sterne
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.top = Math.random() * 100 + '%';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.animationDuration = (20 + Math.random() * 40) + 's';
+    starsContainer.appendChild(star);
+  }
 
-    searchInput.addEventListener('input', function() {
-        const filter = searchInput.value.toLowerCase();
-        seriesCards.forEach(card => {
-            const title = card.querySelector('h3').innerText.toLowerCase();
-            if (title.includes(filter)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
+  // Suche
+  const searchInput = document.getElementById('search');
+  const seriesCards = document.querySelectorAll('.series-card');
+  searchInput.addEventListener('input', () => {
+    const value = searchInput.value.toLowerCase();
+    seriesCards.forEach(card => {
+      const title = card.querySelector('h3').innerText.toLowerCase();
+      card.style.display = title.includes(value) ? 'block' : 'none';
     });
+  });
 </script>
 
 </body>
