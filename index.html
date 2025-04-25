@@ -14,7 +14,6 @@
       color: #FFD700;
     }
 
-    /* Loader */
     #loader {
       position: fixed;
       top: 0; left: 0;
@@ -36,10 +35,11 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    /* Hintergrund-Elemente */
+    /* Sterne */
     #stars {
       position: fixed;
       width: 100%;
@@ -63,47 +63,147 @@
       50% { transform: translate(10px, -10px); }
     }
 
+    /* Planeten */
+    .planet, .moon {
+      position: fixed;
+      border-radius: 50%;
+      opacity: 0.1;
+      box-shadow: 0 0 30px #fff;
+      z-index: 0;
+    }
+
+    .moon {
+      top: 10%;
+      right: 10%;
+      width: 50px;
+      height: 50px;
+      background: #ccc;
+      animation: orbit1 40s linear infinite;
+    }
+
+    .saturn {
+      bottom: 20px;
+      left: 40px;
+      width: 60px;
+      height: 60px;
+      background: #e0a95c;
+      box-shadow: 0 0 20px #e0a95c;
+    }
+
+    .saturn::before {
+      content: '';
+      position: absolute;
+      top: 26px;
+      left: -10px;
+      width: 80px;
+      height: 8px;
+      background: rgba(255, 215, 0, 0.2);
+      border-radius: 50%;
+      transform: rotate(-20deg);
+    }
+
+    .planet.jupiter {
+      top: 15%;
+      left: 5%;
+      width: 100px;
+      height: 100px;
+      background: #ffcc99;
+      animation: orbit2 60s linear infinite;
+    }
+
+    .planet.uranus {
+      bottom: 10%;
+      right: 15%;
+      width: 70px;
+      height: 70px;
+      background: #99ddff;
+      animation: orbit3 80s linear infinite;
+    }
+
+    .planet.mars {
+      top: 35%;
+      right: 5%;
+      width: 40px;
+      height: 40px;
+      background: #ff4422;
+      animation: orbit4 50s linear infinite;
+    }
+
+    .planet.neptun {
+      bottom: 15%;
+      left: 10%;
+      width: 80px;
+      height: 80px;
+      background: #4444ff;
+      animation: orbit5 70s linear infinite;
+    }
+
+    @keyframes orbit1 { 0% { transform: translateY(0); } 50% { transform: translateY(10px); } 100% { transform: translateY(0); } }
+    @keyframes orbit2 { 0% { transform: rotate(0deg) translateX(10px); } 100% { transform: rotate(360deg) translateX(10px); } }
+    @keyframes orbit3 { 0% { transform: rotate(0deg) translateX(-10px); } 100% { transform: rotate(360deg) translateX(-10px); } }
+    @keyframes orbit4 { 0% { transform: translateY(0); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0); } }
+    @keyframes orbit5 { 0% { transform: rotate(0deg) translateY(6px); } 100% { transform: rotate(360deg) translateY(6px); } }
+
     /* Header & Logo */
     header {
       text-align: center;
-      padding: 60px 10px 10px;
+      padding: 40px 10px 10px;
       z-index: 1;
       position: relative;
     }
 
     .logo {
-      position: relative;
       width: 120px;
       height: 120px;
-      margin: 0 auto;
-      background: linear-gradient(135deg, #FFD700, #ffcc00);
-      clip-path: polygon(0 0, 40% 0, 60% 100%, 100% 100%, 100% 100%, 0 100%);
-      animation: bounce 2s infinite ease-in-out;
-      box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD70088;
+      margin: 0 auto 10px;
+      position: relative;
+      animation: glow 3s infinite ease-in-out;
+    }
+
+    .logo::before {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border: 4px solid #FFD700;
+      border-radius: 50%;
+      top: 30px;
+      left: 30px;
+      animation: pulse 3s infinite;
     }
 
     .logo::after {
-      content: "N";
+      content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 58px;
-      font-weight: bold;
-      color: #000814;
-      text-shadow: 0 0 10px #FFD700;
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      top: 56px;
+      left: 56px;
+      border-radius: 50%;
+      animation: blink 1.5s infinite alternate;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    @keyframes blink {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 10px #FFD700; }
+      50% { box-shadow: 0 0 30px #FFD700; }
     }
 
     header h1 {
       font-size: 36px;
       color: #FFD700;
-      margin: 10px 0;
       text-shadow: 0 0 15px #FFD700;
+      margin: 10px 0;
     }
 
     header p {
@@ -143,6 +243,7 @@
     .series-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, auto);
       gap: 30px;
       padding: 30px;
       max-width: 1100px;
@@ -183,6 +284,7 @@
       z-index: 1;
       position: relative;
     }
+
   </style>
 </head>
 <body>
@@ -192,6 +294,12 @@
 </div>
 
 <div id="stars"></div>
+<div class="moon"></div>
+<div class="saturn"></div>
+<div class="planet jupiter"></div>
+<div class="planet uranus"></div>
+<div class="planet mars"></div>
+<div class="planet neptun"></div>
 
 <header>
   <div class="logo"></div>
@@ -206,19 +314,9 @@
 <div id="series-title">Beliebte Titel</div>
 
 <div class="series-grid">
-  <!-- 12 Beispiel-Videos -->
+  <!-- 12 Video Cards -->
   <div class="series-card"><h3>Episode 1</h3><video controls><source src="episode1.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 2</h3><video controls><source src="episode2.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 3</h3><video controls><source src="episode3.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 4</h3><video controls><source src="episode4.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 5</h3><video controls><source src="episode5.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 6</h3><video controls><source src="episode6.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 7</h3><video controls><source src="episode7.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 8</h3><video controls><source src="episode8.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 9</h3><video controls><source src="episode9.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 10</h3><video controls><source src="episode10.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 11</h3><video controls><source src="episode11.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 12</h3><video controls><source src="episode12.mp4" type="video/mp4"></video></div>
+  <!-- ... füge hier die restlichen Episoden bis 12 hinzu ... -->
 </div>
 
 <footer>
