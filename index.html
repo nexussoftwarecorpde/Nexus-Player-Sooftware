@@ -11,14 +11,36 @@
       background: radial-gradient(ellipse at bottom, #00132b, #000814);
       overflow-x: hidden;
       color: #FFD700;
-    }#stars, .planet, .moon {
+    }#loader {
   position: fixed;
-  z-index: 0;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000814;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-ring {
+  border: 6px solid #002850;
+  border-top: 6px solid #FFD700;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 #stars {
+  position: fixed;
   width: 100%;
   height: 100%;
+  z-index: 0;
   overflow: hidden;
 }
 
@@ -38,50 +60,50 @@
   100% { transform: translate(0, 0); }
 }
 
-.planet {
+.planet, .moon {
+  position: fixed;
   border-radius: 50%;
-  filter: blur(1px);
-  opacity: 0.15;
-  animation: floatPlanet 60s ease-in-out infinite alternate;
-}
-
-.planet.jupiter {
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(to right, #d1a679, #f5deb3);
-  top: 100px;
-  left: 50px;
-}
-
-.planet.uranus {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(to right, #98d8f8, #b0e0e6);
-  top: 500px;
-  right: 70px;
-}
-
-.planet.neptune {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(to right, #4169e1, #1e90ff);
-  bottom: 150px;
-  left: 100px;
+  opacity: 0.2;
+  z-index: 0;
+  animation: float 20s ease-in-out infinite;
+  box-shadow: 0 0 30px rgba(255,255,255,0.1);
 }
 
 .moon {
-  top: 40px;
-  right: 60px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #ccc;
-  box-shadow: 0 0 20px #fff;
+  width: 80px;
+  height: 80px;
+  background: #ddd;
+  top: 60px;
+  right: 40px;
 }
 
-@keyframes floatPlanet {
-  0% { transform: translateY(0px); }
-  100% { transform: translateY(-20px); }
+.planet.jupiter {
+  width: 100px;
+  height: 100px;
+  background: #d2a679;
+  bottom: 50px;
+  left: 40px;
+}
+
+.planet.uranus {
+  width: 70px;
+  height: 70px;
+  background: #aee9f5;
+  top: 150px;
+  left: 100px;
+}
+
+.planet.neptune {
+  width: 60px;
+  height: 60px;
+  background: #667eea;
+  bottom: 120px;
+  right: 120px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 header {
@@ -100,22 +122,20 @@ header {
 
 .logo::before {
   content: 'N';
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  font-size: 90px;
+  font-size: 64px;
   color: #FFD700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: bold;
-  text-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700;
-  animation: glow 2s infinite alternate;
+  text-shadow: 0 0 15px #FFD700, 0 0 30px #FFD700;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
   0% { text-shadow: 0 0 10px #FFD700; }
-  100% { text-shadow: 0 0 30px #FFD700, 0 0 60px #FFD700; }
+  100% { text-shadow: 0 0 30px #FFD700; }
 }
 
 header h1 {
@@ -162,7 +182,6 @@ header p {
 .series-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(4, auto);
   gap: 30px;
   padding: 30px;
   max-width: 1100px;
@@ -189,7 +208,7 @@ header p {
   color: #FFD700;
 }
 
-.series-card video {
+.series-card video, .series-card iframe {
   width: 100%;
   border-radius: 10px;
 }
@@ -199,14 +218,16 @@ footer {
   font-size: 14px;
   color: #cccccc;
   padding: 25px 10px;
-  position: relative;
+  margin-top: auto;
   z-index: 1;
+  position: relative;
 }
 
   </style>
 </head>
-<body>
-<div id="stars"></div>
+<body><div id="loader">
+  <div class="loader-ring"></div>
+</div><div id="stars"></div>
 <div class="moon"></div>
 <div class="planet jupiter"></div>
 <div class="planet uranus"></div>
@@ -217,10 +238,19 @@ footer {
 </header><div id="search-container">
   <input type="text" id="search" placeholder="Suche nach Serien...">
 </div><div id="series-title">Beliebte Titel</div><div class="series-grid">
-  <!-- Beispielkarten -->
-  <div class="series-card"><h3>Episode 1</h3><video controls><source src="episode1.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 2</h3><video controls><source src="episode2.mp4" type="video/mp4"></video></div>
-  <div class="series-card"><h3>Episode 3</h3><video controls><source src="episode3.mp4" type="video/mp4"></video></div>
+  <div class="series-card">
+    <h3>John Wick 1 | Ger 2014</h3>
+    <iframe src="https://www.youtube.com/embed/Mbucq0zfLow" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="series-card">
+    <h3>Freelancers | Ger 2012</h3>
+    <iframe src="https://www.youtube.com/embed/aupAjMVXBQg" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="series-card">
+    <h3>Gesetz der Straße | Ger 2010</h3>
+    <iframe src="https://www.youtube.com/embed/yh6nQZ9jAUs" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <!-- Weitere Platzhalter-Videos -->
   <div class="series-card"><h3>Episode 4</h3><video controls><source src="episode4.mp4" type="video/mp4"></video></div>
   <div class="series-card"><h3>Episode 5</h3><video controls><source src="episode5.mp4" type="video/mp4"></video></div>
   <div class="series-card"><h3>Episode 6</h3><video controls><source src="episode6.mp4" type="video/mp4"></video></div>
@@ -233,9 +263,12 @@ footer {
 </div><footer>
   Powered by Nexus Software Corp. | 2025 DE-VAE ©
 </footer><script>
-  // Sterne generieren
+  window.addEventListener("load", function() {
+    document.getElementById("loader").style.display = "none";
+  });
+
   const starsContainer = document.getElementById('stars');
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < 100; i++) {
     const star = document.createElement('div');
     star.classList.add('star');
     star.style.top = Math.random() * 100 + '%';
