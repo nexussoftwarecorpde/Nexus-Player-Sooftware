@@ -14,7 +14,7 @@
       color: #FFD700;
     }
 
-    /* Ladebildschirm */
+    /* Loader */
     #loader {
       position: fixed;
       top: 0; left: 0;
@@ -36,11 +36,10 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      to { transform: rotate(360deg); }
     }
 
-    /* Sterne */
+    /* Hintergrund-Elemente */
     #stars {
       position: fixed;
       width: 100%;
@@ -60,103 +59,51 @@
     }
 
     @keyframes floatStars {
-      0% { transform: translate(0, 0); }
+      0%, 100% { transform: translate(0, 0); }
       50% { transform: translate(10px, -10px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    /* Mond */
-    .moon {
-      position: fixed;
-      top: 40px;
-      right: 60px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #ccc;
-      box-shadow: 0 0 20px #fff;
-      z-index: 0;
-    }
-
-    /* Saturn */
-    .saturn {
-      position: fixed;
-      bottom: 20px;
-      left: 40px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: #e0a95c;
-      box-shadow: 0 0 20px #e0a95c;
-      z-index: 0;
-    }
-
-    .saturn::before {
-      content: '';
-      position: absolute;
-      top: 26px;
-      left: -10px;
-      width: 80px;
-      height: 8px;
-      background: rgba(255, 215, 0, 0.4);
-      border-radius: 50%;
-      transform: rotate(-20deg);
     }
 
     /* Header & Logo */
     header {
       text-align: center;
-      padding: 40px 10px 10px;
+      padding: 60px 10px 10px;
       z-index: 1;
       position: relative;
     }
 
     .logo {
+      position: relative;
       width: 120px;
       height: 120px;
-      margin: 0 auto 10px;
-      position: relative;
-    }
-
-    .logo::before {
-      content: '';
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      border: 4px solid #FFD700;
-      border-radius: 50%;
-      top: 30px;
-      left: 30px;
-      animation: pulse 3s infinite;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #FFD700, #ffcc00);
+      clip-path: polygon(0 0, 40% 0, 60% 100%, 100% 100%, 100% 100%, 0 100%);
+      animation: bounce 2s infinite ease-in-out;
+      box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD70088;
     }
 
     .logo::after {
-      content: '';
+      content: "N";
       position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #fff;
-      top: 56px;
-      left: 56px;
-      border-radius: 50%;
-      animation: blink 1.5s infinite alternate;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 58px;
+      font-weight: bold;
+      color: #000814;
+      text-shadow: 0 0 10px #FFD700;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.2); opacity: 1; }
-    }
-
-    @keyframes blink {
-      0% { opacity: 0.3; }
-      100% { opacity: 1; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     header h1 {
       font-size: 36px;
       color: #FFD700;
-      text-shadow: 0 0 15px #FFD700;
       margin: 10px 0;
+      text-shadow: 0 0 15px #FFD700;
     }
 
     header p {
@@ -165,7 +112,6 @@
       color: #cccccc;
     }
 
-    /* Suche */
     #search-container {
       text-align: center;
       margin: 30px 0 10px;
@@ -185,7 +131,6 @@
       outline: none;
     }
 
-    /* Beliebte Serien */
     #series-title {
       text-align: center;
       font-size: 26px;
@@ -229,7 +174,6 @@
       border-radius: 10px;
     }
 
-    /* Footer */
     footer {
       text-align: center;
       font-size: 14px;
@@ -239,7 +183,6 @@
       z-index: 1;
       position: relative;
     }
-
   </style>
 </head>
 <body>
@@ -249,8 +192,6 @@
 </div>
 
 <div id="stars"></div>
-<div class="moon"></div>
-<div class="saturn"></div>
 
 <header>
   <div class="logo"></div>
@@ -262,9 +203,10 @@
   <input type="text" id="search" placeholder="Suche nach Serien...">
 </div>
 
-<div id="series-title">Beliebte Serien</div>
+<div id="series-title">Beliebte Titel</div>
 
 <div class="series-grid">
+  <!-- 12 Beispiel-Videos -->
   <div class="series-card"><h3>Episode 1</h3><video controls><source src="episode1.mp4" type="video/mp4"></video></div>
   <div class="series-card"><h3>Episode 2</h3><video controls><source src="episode2.mp4" type="video/mp4"></video></div>
   <div class="series-card"><h3>Episode 3</h3><video controls><source src="episode3.mp4" type="video/mp4"></video></div>
@@ -274,6 +216,9 @@
   <div class="series-card"><h3>Episode 7</h3><video controls><source src="episode7.mp4" type="video/mp4"></video></div>
   <div class="series-card"><h3>Episode 8</h3><video controls><source src="episode8.mp4" type="video/mp4"></video></div>
   <div class="series-card"><h3>Episode 9</h3><video controls><source src="episode9.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 10</h3><video controls><source src="episode10.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 11</h3><video controls><source src="episode11.mp4" type="video/mp4"></video></div>
+  <div class="series-card"><h3>Episode 12</h3><video controls><source src="episode12.mp4" type="video/mp4"></video></div>
 </div>
 
 <footer>
@@ -281,12 +226,10 @@
 </footer>
 
 <script>
-  // Ladeanimation
   window.addEventListener("load", function() {
     document.getElementById("loader").style.display = "none";
   });
 
-  // Sterne
   const starsContainer = document.getElementById('stars');
   for (let i = 0; i < 100; i++) {
     const star = document.createElement('div');
@@ -297,7 +240,6 @@
     starsContainer.appendChild(star);
   }
 
-  // Suche
   const searchInput = document.getElementById('search');
   const seriesCards = document.querySelectorAll('.series-card');
   searchInput.addEventListener('input', () => {
