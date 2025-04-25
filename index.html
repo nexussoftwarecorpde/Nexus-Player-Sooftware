@@ -13,22 +13,14 @@
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #000428, #004e92);
       color: #f1c40f;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeIn 1s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      overflow-x: hidden;
     }
 
     header {
       font-size: 3rem;
       font-weight: bold;
-      margin: 40px 0 20px;
+      text-align: center;
+      margin: 40px 0 10px;
       text-shadow: 0 0 10px #f1c40f, 0 0 20px #ffdd57;
       animation: glow 2s infinite alternate;
     }
@@ -38,10 +30,19 @@
       to { text-shadow: 0 0 20px #f1c40f; }
     }
 
+    .quote {
+      text-align: center;
+      font-style: italic;
+      margin-bottom: 30px;
+      color: #ffe066;
+      opacity: 0.8;
+    }
+
     .search-container {
       width: 80%;
       max-width: 600px;
-      margin-bottom: 40px;
+      margin: 20px auto 40px;
+      text-align: center;
     }
 
     input[type="text"] {
@@ -79,6 +80,8 @@
       text-align: center;
       box-shadow: 0 0 10px #000000aa;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
     }
 
     .series-item:hover {
@@ -95,36 +98,88 @@
       border-radius: 10px;
     }
 
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
     footer {
-      margin-top: auto;
+      margin-top: 40px;
       padding: 20px;
       font-size: 0.9rem;
       opacity: 0.7;
       color: #f1c40f;
+      text-align: center;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .side-glow {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      background: linear-gradient(to bottom, #f1c40f33, transparent, #f1c40f33);
+      z-index: 0;
+    }
+
+    .side-glow.left {
+      left: 0;
+    }
+
+    .side-glow.right {
+      right: 0;
+    }
+
+    .popular-section {
+      text-align: center;
+      margin: 60px 0 30px;
+      font-size: 1.5rem;
+      color: #ffdb4d;
+      text-shadow: 0 0 8px #f1c40f99;
     }
   </style>
 </head>
 <body>
+  <div class="stars"></div>
+  <div class="side-glow left"></div>
+  <div class="side-glow right"></div>
+
   <header>Nexus Software Player</header>
+  <div class="quote">„Deine Serienwelt. Jederzeit. Kostenlos.“</div>
 
   <div class="search-container">
     <input type="text" placeholder="Suche nach Serien...">
   </div>
+
+  <div class="popular-section">Beliebte Serien</div>
 
   <div class="series-list">
     <div class="series-item">
       <h3>Episode 1: Der Anfang</h3>
       <video controls>
         <source src="videos/video1.mp4" type="video/mp4">
-        Dein Browser unterstützt das Video-Format nicht.
       </video>
     </div>
-
     <div class="series-item">
       <h3>Episode 2: Die Reise beginnt</h3>
       <video controls>
         <source src="videos/video2.mp4" type="video/mp4">
-        Dein Browser unterstützt das Video-Format nicht.
       </video>
     </div>
   </div>
